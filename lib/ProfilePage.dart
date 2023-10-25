@@ -215,7 +215,7 @@ Future<dynamic> UserDetails(
               '          User Details',
             ),
             content:
-                Text("Users Name : ${username.length}\nPhone Number: ${Phone}"),
+                Text("Users Name : ${username[0]}\nPhone Number: ${Phone}"),
           );
         });
 String Phone = '';
