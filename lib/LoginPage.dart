@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SignupPage.dart';
 
+final TextEditingController UserNameController = TextEditingController();
 List<String> username = [];
 List<String> password = [];
 List<String> PhnNumber = [];
@@ -20,7 +21,6 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   final TextEditingController PasswordController = TextEditingController();
-  final TextEditingController UserNameController = TextEditingController();
 
   // bool pressed = true;
   // bool press = true;
@@ -215,13 +215,9 @@ class LoginPageState extends State<LoginPage> {
   // }
 
   void Validation(BuildContext context) async {
-    for (int i = 0;
-        i < Provider.of<SignUp>(context, listen: false).SignupUsernames.length;
-        i++) {
-      if (UserNameController.text ==
-              Provider.of<SignUp>(context, listen: false).SignupUsernames[i] &&
-          PasswordController.text ==
-              Provider.of<SignUp>(context, listen: false).SignupPasswords[i]) {
+    for (int i = 0; i < SignupUsernames.length; i++) {
+      if (UserNameController.text == SignupUsernames[i] &&
+          PasswordController.text == SignupPasswords[i]) {
         Provider.of<LoginProvider>(context, listen: false)
             .AddLoginInfo(UserNameController.text, PasswordController.text);
         Navigator.pushReplacement(
@@ -236,7 +232,6 @@ class LoginPageState extends State<LoginPage> {
     final prefs = await SharedPreferences.getInstance();
     username = prefs.getStringList('logins') ?? [];
     password = prefs.getStringList('passwords') ?? [];
-    prefs.clear();
     print(username);
     print(password);
   }

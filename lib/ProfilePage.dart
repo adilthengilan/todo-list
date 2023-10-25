@@ -1,4 +1,3 @@
-import 'package:design/ListView.dart';
 import 'package:design/providerrr.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    findPhone();
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 255, 255),
       body: Column(
@@ -143,12 +143,12 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           GestureDetector(
             onTap: () {
+              Provider.of<LoginProvider>(context, listen: false).removeLogin(0);
               Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => LoginPage()),
                 (route) =>
                     false, // This ensures all previous routes are removed
               );
-              Provider.of<LoginProvider>(context).removeLogin();
             },
             child: Container(
               margin: EdgeInsets.only(
@@ -214,7 +214,17 @@ Future<dynamic> UserDetails(
             title: Text(
               '          User Details',
             ),
-            content: Text(
-                "Users Name : ${username[0]}\nPhone Number: ${PhoneNumber[0]}"),
+            content:
+                Text("Users Name : ${username.length}\nPhone Number: ${Phone}"),
           );
         });
+String Phone = '';
+void findPhone() {
+  int i;
+
+  for (i = 0; i < SignupUsernames.length; i++) {
+    if (username[0] == SignupUsernames[i]) {
+      Phone = PhoneNumber[i];
+    }
+  }
+}

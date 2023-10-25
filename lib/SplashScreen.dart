@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:design/HomePage.dart';
 import 'package:design/LoginPage.dart';
-import 'package:design/providerrr.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,10 +13,25 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   LoginPageState obj = LoginPageState();
   @override
-  void initState() {
-    super.initState();
+  // void initState() {
+  //   super.initState();
+  //   obj.loadLogin();
+  //   print(username);
+  //   Timer(Duration(seconds: 5), () {
+  //     if (username.isEmpty || password.isEmpty) {
+  //       Navigator.pushReplacement(
+  //           context, MaterialPageRoute(builder: (context) => LoginPage()));
+  //     } else {
+  //       Navigator.pushReplacement(
+  //           context, MaterialPageRoute(builder: (context) => HomePage()));
+  //     }
+  //   });
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    // Provider.of<SignUp>(context).Get_SignupDetails();
     obj.loadLogin();
-    print(username);
     Timer(Duration(seconds: 5), () {
       if (username.isEmpty || password.isEmpty) {
         Navigator.pushReplacement(
@@ -28,11 +41,6 @@ class _SplashScreenState extends State<SplashScreen> {
             context, MaterialPageRoute(builder: (context) => HomePage()));
       }
     });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    Provider.of<SignUp>(context).Get_SignupDetails();
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(

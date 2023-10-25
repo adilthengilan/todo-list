@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'LoginPage.dart';
 
 List<String> PhoneNumber = [];
+  List<String> SignupUsernames = [];
+  List<String> SignupPasswords = [];
 
 class SignUpPage extends StatefulWidget {
   SignUpPage({

@@ -49,6 +49,7 @@ class LoginProvider with ChangeNotifier {
     username.add(use);
     password.add(pass);
     saveLogin();
+    UserNameController.clear();
   }
 
   Future<void> saveLogin() async {
@@ -57,17 +58,15 @@ class LoginProvider with ChangeNotifier {
     prefs.setStringList('passwords', password);
   }
 
-  removeLogin() {
-    username.removeAt(0);
-    password.removeAt(0);
+  void removeLogin(int index) {
+    username.removeAt(index);
+    password.removeAt(index);
     saveLogin();
+    notifyListeners();
   }
 }
 
 class SignUp extends ChangeNotifier {
-  List<String> SignupUsernames = [];
-  List<String> SignupPasswords = [];
-
   SignUp() {
     Get_SignupDetails();
     notifyListeners();
@@ -85,6 +84,7 @@ class SignUp extends ChangeNotifier {
     SignupUsernames = object.getStringList('SignUpUserNames') ?? [];
     SignupPasswords = object.getStringList('SignUpPasswords') ?? [];
     PhoneNumber = object.getStringList('PhoneNumber') ?? [];
+
     print(SignupUsernames);
     print(SignupPasswords);
   }
