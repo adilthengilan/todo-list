@@ -14,6 +14,8 @@ class ProfilePage extends StatefulWidget {
   State<ProfilePage> createState() => ProfilePageState();
 }
 
+var Delete;
+
 class ProfilePageState extends State<ProfilePage> {
   LoginPageState login = LoginPageState();
 
@@ -23,185 +25,205 @@ class ProfilePageState extends State<ProfilePage> {
     DeleteAccountindex();
     return Scaffold(
       backgroundColor: Color.fromRGBO(255, 255, 255, 1),
-      body: Column(
-        children: [
-          Container(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 300, left: 10),
-              child: Row(
-                children: [
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      height: 40,
-                      width: 40,
-                      child: IconButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()));
-                          },
-                          icon: Icon(Icons.arrow_back_ios_new)))
-                ],
-              ),
+      body: Center(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                    margin: EdgeInsets.only(top: 40, left: 10),
+                    decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 31, 8, 93),
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    height: 40,
+                    width: 40,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomePage()));
+                        },
+                        icon: Icon(
+                          Icons.arrow_back_ios_new,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                        ))),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20, top: 40),
+                  child: Text(
+                    'Profile',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                  ),
+                )
+              ],
             ),
-            height: 400,
-            width: 400,
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 5, 12, 90),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30)),
-                image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/user_pic-removebg-preview.png'),
-                    fit: BoxFit.fill)),
-          ),
-          Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 30),
-                child: SizedBox(
-                  width: 130,
-                  child: Text(
-                    username[0],
-                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.w900),
-                  ),
-                ),
-              ),
-              Container(
-                child: Center(
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                margin: EdgeInsets.only(top: 8, left: 30),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              child: Container(
+                height: 200,
+                width: 200,
                 decoration: BoxDecoration(
-                    color: Colors.indigo,
-                    borderRadius: BorderRadius.all(Radius.circular(25))),
-                height: 50,
-                width: MediaQuery.of(context).size.width / 2.2,
+                    image: DecorationImage(
+                        image: AssetImage(
+                          'assets/images/user pic.jpeg',
+                        ),
+                        fit: BoxFit.fill),
+                    color: Colors.black,
+                    borderRadius: BorderRadius.all(Radius.circular(100))),
               ),
-            ],
-          ),
-          GestureDetector(
-            onTap: () {},
-            child: Container(
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 50,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, top: 0),
-                child: Row(
-                  children: [
-                    Icon(Icons.settings, size: 30),
-                    Text(
-                      '   Settings',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
-              ),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 248, 248, 248),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              height: MediaQuery.of(context).size.height / 14,
-              width: MediaQuery.of(context).size.width / 1.06,
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              UserDetails(context);
-            },
-            child: Container(
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 50,
+            Container(
+              margin: EdgeInsets.only(top: 10),
+              // width: double.infinity,
+              child: Text(
+                username[0],
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
               ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, top: 0),
-                child: Row(
-                  children: [
-                    Icon(Icons.account_box, size: 30),
-                    Text(
-                      '   User Details',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
-              ),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 248, 248, 248),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              height: MediaQuery.of(context).size.height / 14,
-              width: MediaQuery.of(context).size.width / 1.06,
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Provider.of<LoginProvider>(context, listen: false).removeLogin(0);
-              Navigator.of(context).pushAndRemoveUntil(
-                MaterialPageRoute(builder: (context) => LoginPage()),
-                (route) =>
-                    false, // This ensures all previous routes are removed
-              );
-            },
-            child: Container(
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 50,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, top: 0),
-                child: Row(
-                  children: [
-                    Icon(Icons.logout, size: 30),
-                    Text(
-                      '   Logout',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
-                ),
-              ),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 248, 248, 248),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              height: MediaQuery.of(context).size.height / 14,
-              width: MediaQuery.of(context).size.width / 1.06,
+            SizedBox(
+              height: 30,
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              DeleteAccount(context);
-            },
-            child: Container(
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 50,
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, top: 0),
-                child: Row(
-                  children: [
-                    Icon(Icons.delete, size: 30),
-                    Text(
-                      '   Delete Account',
-                      style: TextStyle(fontSize: 22),
-                    ),
-                  ],
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50,
                 ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, top: 0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.edit_document, size: 30),
+                      Text(
+                        '   Edit Profile',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 248, 248, 248),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                height: MediaQuery.of(context).size.height / 14,
+                width: MediaQuery.of(context).size.width / 1.06,
               ),
-              decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 248, 248, 248),
-                  borderRadius: BorderRadius.all(Radius.circular(10))),
-              height: MediaQuery.of(context).size.height / 14,
-              width: MediaQuery.of(context).size.width / 1.06,
             ),
-          ),
-        ],
+            GestureDetector(
+              onTap: () {},
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, top: 0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.settings, size: 30),
+                      Text(
+                        '   Settings',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 248, 248, 248),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                height: MediaQuery.of(context).size.height / 14,
+                width: MediaQuery.of(context).size.width / 1.06,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                UserDetails(context);
+              },
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, top: 0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.account_box, size: 30),
+                      Text(
+                        '   User Details',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 248, 248, 248),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                height: MediaQuery.of(context).size.height / 14,
+                width: MediaQuery.of(context).size.width / 1.06,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                Provider.of<LoginProvider>(context, listen: false)
+                    .removeLogin(0);
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                  (route) =>
+                      false, // This ensures all previous routes are removed
+                );
+              },
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, top: 0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.logout, size: 30),
+                      Text(
+                        '   Logout',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 248, 248, 248),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                height: MediaQuery.of(context).size.height / 14,
+                width: MediaQuery.of(context).size.width / 1.06,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                DeleteAccount(context);
+              },
+              child: Container(
+                margin: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(left: 20, top: 0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete, size: 30),
+                      Text(
+                        '   Delete Account',
+                        style: TextStyle(fontSize: 22),
+                      ),
+                    ],
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 248, 248, 248),
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
+                height: MediaQuery.of(context).size.height / 14,
+                width: MediaQuery.of(context).size.width / 1.06,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -236,7 +258,6 @@ class ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  var Delete;
   void DeleteAccountindex() {
     int i;
     for (i = 0; i < SignupUsernames.length; i++) {
@@ -270,10 +291,11 @@ class ProfilePageState extends State<ProfilePage> {
                       onPressed: () {
                         Provider.of<LoginProvider>(context, listen: false)
                             .removeLogin(0);
-
+                        Navigator.of(
+                          context,
+                        ).pop();
                         value.DeleteDetails();
 
-                        Navigator.of(context).pop();
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(builder: (context) => LoginPage()),
                           (route) =>

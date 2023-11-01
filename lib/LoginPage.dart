@@ -2,7 +2,6 @@ import 'package:design/HomePage.dart';
 import 'package:design/providerrr.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'SignupPage.dart';
 
 class LoginPage extends StatefulWidget {
@@ -52,10 +51,10 @@ class LoginPageState extends State<LoginPage> {
               children: [
                 SizedBox(
                   width: double.infinity,
-                  height: MediaQuery.of(context).size.height / 1.5,
+                  height: MediaQuery.of(context).size.height / 1.6,
                   child: SizedBox(
-                      height: 350,
-                      width: 350,
+                      height: 250,
+                      width: 250,
                       child: Image.asset('assets/images/todo-app-icon.png')),
                 ),
                 Container(
@@ -152,7 +151,7 @@ class LoginPageState extends State<LoginPage> {
                           showError = false;
                         });
                       }
-                      Validation(context);
+                      Validation();
                     },
                     child: Text(
                       'Login',
@@ -208,6 +207,47 @@ class LoginPageState extends State<LoginPage> {
                     // )
                   ],
                 ),
+                Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        margin: EdgeInsets.only(left: 120, top: 10),
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            image: DecorationImage(
+                                image: AssetImage(
+                                    'assets/images/7611770-removebg-preview.png'))),
+                      ),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10, top: 10),
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/Gmail-logo-removebg-preview.png'))),
+                    ),
+                    Container(
+                      margin: EdgeInsets.only(left: 10, top: 10),
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/download__2_-removebg-preview (1).png'),
+                              fit: BoxFit.fill)),
+                    )
+                  ],
+                )
               ],
             ),
           ),
@@ -234,7 +274,7 @@ class LoginPageState extends State<LoginPage> {
   //   saveLogin();
   // }
 
-  void Validation(BuildContext context) async {
+  void Validation() async {
     for (int i = 0; i < SignupUsernames.length; i++) {
       if (UserNameController.text == SignupUsernames[i] &&
           PasswordController.text == SignupPasswords[i]) {
@@ -246,7 +286,6 @@ class LoginPageState extends State<LoginPage> {
           showError = false;
         });
         print('hhhhhhhhhhhhhhhhhh');
-        
       }
     }
   }

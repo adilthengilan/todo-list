@@ -66,15 +66,15 @@ class LoginProvider with ChangeNotifier {
     saveLogin();
     notifyListeners();
   }
-  Future<void> loadLogin() async {
-  final prefs = await SharedPreferences.getInstance();
-  username = prefs.getStringList('logins') ?? [];
-  password = prefs.getStringList('passwords') ?? [];
-  
-  print(username);
-  print(password);
-}
 
+  Future<void> loadLogin() async {
+    final prefs = await SharedPreferences.getInstance();
+    username = prefs.getStringList('logins') ?? [];
+    password = prefs.getStringList('passwords') ?? [];
+
+    print(username);
+    print(password);
+  }
 }
 
 class SignUp extends ChangeNotifier {
@@ -96,9 +96,9 @@ class SignUp extends ChangeNotifier {
     SignupUsernames = object.getStringList('SignUpUserNames') ?? [];
     SignupPasswords = object.getStringList('SignUpPasswords') ?? [];
     PhoneNumber = object.getStringList('PhoneNumber') ?? [];
-
     print(SignupUsernames);
     print(SignupPasswords);
+    print(PhoneNumber);
   }
 
   void AddSignupDetails(String name, String Pss, String Phone) {
@@ -110,8 +110,9 @@ class SignUp extends ChangeNotifier {
   }
 
   void DeleteDetails() {
-    SignupUsernames.removeAt(profile.Delete);
-    SignupPasswords.removeAt(profile.Delete);
+    SignupUsernames.removeAt(Delete);
+    SignupPasswords.removeAt(Delete);
+    PhoneNumber.removeAt(Delete);
     Save_SignupDetails();
     notifyListeners();
   }
