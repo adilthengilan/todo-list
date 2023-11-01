@@ -11,17 +11,18 @@ class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => _ProfilePageState();
+  State<ProfilePage> createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
+class ProfilePageState extends State<ProfilePage> {
   LoginPageState login = LoginPageState();
 
   @override
   Widget build(BuildContext context) {
     findPhone();
+    DeleteAccountindex();
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: Color.fromRGBO(255, 255, 255, 1),
       body: Column(
         children: [
           Container(
@@ -173,58 +174,115 @@ class _ProfilePageState extends State<ProfilePage> {
               width: MediaQuery.of(context).size.width / 1.06,
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height / 50,
-            ),
-            child: Padding(
-              padding: EdgeInsets.only(left: 20, top: 0),
-              child: Row(
-                children: [
-                  Icon(Icons.delete, size: 30),
-                  Text(
-                    '   Delete Account',
-                    style: TextStyle(fontSize: 22),
-                  ),
-                ],
+          GestureDetector(
+            onTap: () {
+              DeleteAccount(context);
+            },
+            child: Container(
+              margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 50,
               ),
+              child: Padding(
+                padding: EdgeInsets.only(left: 20, top: 0),
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, size: 30),
+                    Text(
+                      '   Delete Account',
+                      style: TextStyle(fontSize: 22),
+                    ),
+                  ],
+                ),
+              ),
+              decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 248, 248, 248),
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              height: MediaQuery.of(context).size.height / 14,
+              width: MediaQuery.of(context).size.width / 1.06,
             ),
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 248, 248, 248),
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            height: MediaQuery.of(context).size.height / 14,
-            width: MediaQuery.of(context).size.width / 1.06,
           ),
         ],
       ),
     );
   }
-}
 
-Future<dynamic> UserDetails(
-  BuildContext context,
-) async =>
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-            title: Text(
-              '          User Details',
-            ),
-            content:
-                Text("Users Name : ${username[0]}\nPhone Number: ${Phone}"),
-          );
-        });
-String Phone = '';
-void findPhone() {
-  int i;
+  String Phone = '';
 
-  for (i = 0; i < SignupUsernames.length; i++) {
-    if (username[0] == SignupUsernames[i]) {
-      Phone = PhoneNumber[i];
+  Future<dynamic> UserDetails(
+    BuildContext context,
+  ) async =>
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15))),
+              title: Text(
+                '          User Details',
+              ),
+              content:
+                  Text("Users Name : ${username[0]}\nPhone Number: ${Phone}"),
+            );
+          });
+
+  void findPhone() {
+    int i;
+
+    for (i = 0; i < SignupUsernames.length; i++) {
+      if (username[0] == SignupUsernames[i]) {
+        Phone = PhoneNumber[i];
+      }
     }
   }
+
+  var Delete;
+  void DeleteAccountindex() {
+    int i;
+    for (i = 0; i < SignupUsernames.length; i++) {
+      if (username[0] == SignupUsernames[i]) {
+        Delete = i;
+      }
+    }
+  }
+
+  Future<dynamic> DeleteAccount(
+    BuildContext context,
+  ) async =>
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return Consumer<SignUp>(builder: (context, value, child) {
+              return AlertDialog(
+                backgroundColor: Color.fromARGB(255, 255, 255, 255),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(15))),
+                title: Text(
+                  'Are you sure want to Delete your Account..?',
+                ),
+                actions: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('No')),
+                  TextButton(
+                      onPressed: () {
+                        Provider.of<LoginProvider>(context, listen: false)
+                            .removeLogin(0);
+
+                        value.DeleteDetails();
+
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => LoginPage()),
+                          (route) =>
+                              false, // This ensures all previous routes are removed
+                        );
+                      },
+                      child: Text('Yes'))
+                ],
+              );
+            });
+          });
 }

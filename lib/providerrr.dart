@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:design/LoginPage.dart';
+import 'package:design/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,11 +46,12 @@ class ProviderSetting extends ChangeNotifier {
 }
 
 class LoginProvider with ChangeNotifier {
+  LoginPageState login = LoginPageState();
   void AddLoginInfo(String use, String pass) async {
     username.add(use);
     password.add(pass);
     saveLogin();
-    UserNameController.clear();
+    login.UserNameController.clear();
   }
 
   Future<void> saveLogin() async {
@@ -64,9 +66,19 @@ class LoginProvider with ChangeNotifier {
     saveLogin();
     notifyListeners();
   }
+  Future<void> loadLogin() async {
+  final prefs = await SharedPreferences.getInstance();
+  username = prefs.getStringList('logins') ?? [];
+  password = prefs.getStringList('passwords') ?? [];
+  
+  print(username);
+  print(password);
+}
+
 }
 
 class SignUp extends ChangeNotifier {
+  ProfilePageState profile = ProfilePageState();
   SignUp() {
     Get_SignupDetails();
     notifyListeners();
@@ -95,6 +107,13 @@ class SignUp extends ChangeNotifier {
     PhoneNumber.add(Phone);
 
     Save_SignupDetails();
+  }
+
+  void DeleteDetails() {
+    SignupUsernames.removeAt(profile.Delete);
+    SignupPasswords.removeAt(profile.Delete);
+    Save_SignupDetails();
+    notifyListeners();
   }
 }
 

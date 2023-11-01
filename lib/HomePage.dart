@@ -12,16 +12,15 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomePage> createState() => HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> {
   // Load the saved list when the app starts
   LoginPageState login = LoginPageState();
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<LoginProvider>(context);
     final screenheight = MediaQuery.of(context).size.height;
     final screenwidth = MediaQuery.of(context).size.width;
     return Container(

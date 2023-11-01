@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:design/HomePage.dart';
 import 'package:design/LoginPage.dart';
+import 'package:design/providerrr.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   // void initState() {
   //   super.initState();
-  //   obj.loadLogin();
+  //   loadLogin();
   //   print(username);
   //   Timer(Duration(seconds: 5), () {
   //     if (username.isEmpty || password.isEmpty) {
@@ -30,8 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<LoginProvider>(context).loadLogin();
     // Provider.of<SignUp>(context).Get_SignupDetails();
-    obj.loadLogin();
     Timer(Duration(seconds: 5), () {
       if (username.isEmpty || password.isEmpty) {
         Navigator.pushReplacement(

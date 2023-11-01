@@ -5,11 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'SignupPage.dart';
 
-final TextEditingController UserNameController = TextEditingController();
-List<String> username = [];
-List<String> password = [];
-List<String> PhnNumber = [];
-
 class LoginPage extends StatefulWidget {
   LoginPage({
     super.key,
@@ -19,8 +14,15 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => LoginPageState();
 }
 
+List<String> username = [];
+List<String> password = [];
+List<String> PhnNumber = [];
+
 class LoginPageState extends State<LoginPage> {
   final TextEditingController PasswordController = TextEditingController();
+  final TextEditingController UserNameController = TextEditingController();
+
+  bool showError = false;
 
   // bool pressed = true;
   // bool press = true;
@@ -28,6 +30,8 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Provider.of<SignUp>(context).Get_SignupDetails();
+    Provider.of<LoginProvider>(context).loadLogin();
+
     // Provider.of<LoginProvider>(context);
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -126,12 +130,28 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   );
                 }),
+                Visibility(
+                    visible: showError,
+                    child: Text(
+                      'Check your username or password!..',
+                      style: TextStyle(color: Colors.red),
+                    )),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.10,
                   height: 50,
                   margin: EdgeInsets.only(top: 10),
                   child: TextButton(
                     onPressed: () {
+                      if (UserNameController.text.isEmpty ||
+                          PasswordController.text.isEmpty) {
+                        setState(() {
+                          showError = true;
+                        });
+                      } else {
+                        setState(() {
+                          showError = false;
+                        });
+                      }
                       Validation(context);
                     },
                     child: Text(
@@ -222,24 +242,17 @@ class LoginPageState extends State<LoginPage> {
             .AddLoginInfo(UserNameController.text, PasswordController.text);
         Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => HomePage()));
-
+        setState(() {
+          showError = false;
+        });
         print('hhhhhhhhhhhhhhhhhh');
-      } else {}
+        
+      }
     }
   }
-
-  Future<void> loadLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    username = prefs.getStringList('logins') ?? [];
-    password = prefs.getStringList('passwords') ?? [];
-    print(username);
-    print(password);
-  }
-
-  void checkempty() {
-    if (UserNameController.text.isEmpty) {}
-  }
 }
+
+
 
 // Future<void> loadLogin() async {
 //   final prefs = await SharedPreferences.getInstance();
